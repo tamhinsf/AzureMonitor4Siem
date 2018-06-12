@@ -1,5 +1,4 @@
-appsettings.json
-localsettings.json
+azureSettings.json
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -335,3 +334,4 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+localsettings.json

@@ -29,7 +29,7 @@
     </Content>
   </ItemGroup>
     <ItemGroup>
-    <Content Include="localsettings.json">
+    <Content Include="azureSettings.json">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

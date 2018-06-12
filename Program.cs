@@ -22,7 +22,7 @@ namespace AzureMonitor4Siem
                 .ConfigureAppConfiguration((hostContext, configApp) =>
                 {
                     System.Console.WriteLine(hostContext.HostingEnvironment.EnvironmentName);
-                    configApp.AddJsonFile("localsettings.json", optional: false);
+                    configApp.AddJsonFile("azureSettings.json", optional: false);
                     configApp.AddJsonFile("appsettings.json", optional: true);
                     configApp.AddJsonFile(
                         $"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", 
