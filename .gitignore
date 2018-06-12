@@ -1,4 +1,5 @@
 appsettings.json
+localsettings.json
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
