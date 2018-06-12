@@ -1,0 +1,8 @@
+{
+ "az_storage_account":"mcafeesa",
+ "az_storage_account_container":"mcafeesacontainer",
+ "az_storage_account_sas":"se=2030-01-01&sp=rwdlac&spr=https&sv=2017-07-29&ss=b&srt=sco&sig=c5Rg3uVzwudte6FFdJmfLFdt%2BpcLayWyti3pBptVfIg%3D", 
+ "az_event_hub_connection_string":"Endpoint=sb://mcafeeehns.servicebus.windows.net/;SharedAccessKeyName=azureMonitor;SharedAccessKey=YbyzgEFU9T6hFks7PbNudDb7ttPPC7wcW+crPUtRyFI=;EntityPath=insights-operational-logs", 
+ "az_event_hub_name" : "insights-operational-logs", 
+ "az_local_logs_dir" : "" 
+ }

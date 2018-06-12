@@ -1,0 +1,8 @@
+{
+    "az_storage_account":"",
+    "az_storage_account_container":"",
+    "az_storage_account_sas":"", 
+    "az_event_hub_connection_string":"", 
+    "az_event_hub_name" : "insights-operational-logs" ,
+    "az_local_logs_dir" : ""
+ }
