@@ -29,7 +29,7 @@ AZ_STORAGE_ACCOUNT_SAS=
 AZ_EVENTHUB_CONNECTION_STRING=
 
 # Confirm deletion of any existing resource group or monitor configuration of the same name
-read -p "Delete any existing Azure Resouce Group ($AZ_RESOURCE_GROUP), Monitor Configuration, and appsettings.json? " -n 1 -r
+read -p "Delete any existing Azure Resouce Group ($AZ_RESOURCE_GROUP), Monitor Configuration, and localsettings.json? " -n 1 -r
 echo   
 if [[ $REPLY =~ ^[Yy]$ ]]
 then

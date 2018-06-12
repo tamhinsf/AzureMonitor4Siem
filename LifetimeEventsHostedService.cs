@@ -10,7 +10,6 @@ using System.IO;
 namespace AzureMonitor4Siem
 {
     public class LifetimeEventsHostedService : IHostedService
-    // internal class LifetimeEventsHostedService : IHostedService
     {
         public static ILogger _logger;
         private readonly IApplicationLifetime _appLifetime;
