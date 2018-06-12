@@ -68,7 +68,7 @@ while [ -z "$AZ_EVENTHUB_CREATION_STATUS" ]
 do
     echo "Waiting for Event Hub Creation to complete"
     sleep 30
-    AZ_EVENTHUB_CREATION_STATUS=`az eventhubs eventhub list --resource-group mcafeerg --namespace-name mcafeeehns -o tsv | grep insights-operational-logs`
+    AZ_EVENTHUB_CREATION_STATUS=`az eventhubs eventhub list --resource-group $AZ_RESOURCE_GROUP --namespace-name $AZ_EVENTHUB_NAMESPACE -o tsv | grep insights-operational-logs`
 done
 
 # Now, create a Shared Access Signature that provides limited access to the Event Hub
