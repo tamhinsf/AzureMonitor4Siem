@@ -41,10 +41,7 @@ namespace AzureMonitor4Siem
             else
             {
                 localLogdirectory = _configuration["az_local_logs_dir"];
-
             }
-
-            _logger.LogInformation("Log directory is " + localLogdirectory);
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -58,7 +55,6 @@ namespace AzureMonitor4Siem
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Log directory is " + localLogdirectory);
             return Task.CompletedTask;
         }
 
@@ -67,7 +63,7 @@ namespace AzureMonitor4Siem
             _logger.LogInformation("OnStarted has been called.");
             
             // Perform post-startup activities here     
-
+            _logger.LogInformation("Log directory is " + localLogdirectory);
             _eventProcessorHost.RegisterEventProcessorAsync<SimpleEventProcessor>();
 
         }
@@ -85,6 +81,8 @@ namespace AzureMonitor4Siem
             _logger.LogInformation("OnStopped has been called.");
 
             // Perform post-stopped activities here
+            _logger.LogInformation("Log directory is " + localLogdirectory);
+
         }
     }
 }

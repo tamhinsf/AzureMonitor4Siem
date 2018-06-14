@@ -1,5 +1,28 @@
 #!/bin/sh
 
+# store year month date time as a variable
+# append it to resources to semi-ensure unique names where needed
+DATE_TIME=`date +'%Y%m%d%H%M'`
+
+# Change these values to accomodate your environment
+# No checks of name space compliance, collisions, or the like takes place
+# This script will fail if any of the above occur
+AZ_RESOURCE_GROUP=mysiemrg
+AZ_REGION=westus2
+AZ_STORAGE_ACCOUNT=mysiemsa$DATE_TIME
+AZ_STORAGE_ACCOUNT_CONTAINER=mysiemsacontainer
+AZ_STORAGE_ACCOUNT_SAS_EXPIRY=2030-01-01
+AZ_EVENTHUB_NAMESPACE=mysiemehns$DATE_TIME
+
+# Save the Storage Account SAS And Event Hub Connection string to a variable
+AZ_STORAGE_ACCOUNT_SAS=
+AZ_EVENTHUB_CONNECTION_STRING=
+
+# Use this variable to store where log files get placed during runtime
+AZ_MONITOR_LOG_FILE_PATH=
+
+# Start!
+
 echo ""
 echo "Welcome to the Azure Monitor starter kit!"
 echo ""
@@ -11,29 +34,8 @@ then
     az login
 fi
 
-# store year month date time as a variable
-# append it to resources to semi-ensure unique names where needed
-DATE_TIME=`date +'%Y%m%d%H%M'`
-
 # Get the ID of the Azure Subscription 
 AZ_SUBSCRIPTION_ID=`az account show --query id | sed 's/^"\(.*\)"$/\1/'`
-
-# Change these values to accomodate your environment
-# No checks of name space compliance, collisions, or the like takes place
-# This script will fail if any of the above occur
-AZ_RESOURCE_GROUP=mcafeerg
-AZ_REGION=westus2
-AZ_STORAGE_ACCOUNT=mcafeesa$DATE_TIME
-AZ_STORAGE_ACCOUNT_CONTAINER=mcafeesacontainer
-AZ_STORAGE_ACCOUNT_SAS_EXPIRY=2030-01-01
-AZ_EVENTHUB_NAMESPACE=mcafeeehns$DATE_TIME
-
-# Save the Storage Account SAS And Event Hub Connection string to a variable
-AZ_STORAGE_ACCOUNT_SAS=
-AZ_EVENTHUB_CONNECTION_STRING=
-
-# Use this variable to store where log files get placed during runtime
-AZ_MONITOR_LOG_FILE_PATH=
 
 # Confirm deletion of any existing resource group or monitor configuration of the same name
 read -p "Delete any existing Azure Resouce Group ($AZ_RESOURCE_GROUP), Monitor Configuration, and azureSettings.json? " -n 1 -r
