@@ -39,9 +39,9 @@ Let's get started!
 
 ### Review and Run setupAzureMonitor&#46;sh
 
-*  Navigate to the folder containing your local clone of this repository
-*  In a text editor, open ***setupAzureMonitor&#46;sh***  There are a number of variables you may wish to alter.  
-      * ***AZ_RESOURCE_GROUP*** is the name of the Azure Resource group that will contain the Azure resources created and used.  The name you select must be unique to your Azure subscription.
+*  Go to the folder containing your local clone of this repository
+*  In a text editor, open ***setupAzureMonitor&#46;sh***  There are a number of variables you may wish to alter.  There are some default values provided that you can probably use as-is - but let's be sure!  
+      * ***AZ_RESOURCE_GROUP*** is the name of the Azure Resource group that will contain the Azure resources created and used.  The name you use must be unique to your Azure subscription.
       *  ***AZ_REGION*** is the name of the Azure region in which the Resource Group required for the integration will be created, and all of the supporting resources will be deployed.  By default, the script deploys to "westus2".  You can determine the list of region names through the Azure CLI by logging in and listing them as follows:
          * az login
          * az account list-locations --query [*].name
@@ -50,12 +50,13 @@ Let's get started!
       * ***AZ_EVENTHUB_NAMESPACE***  - the name of the Azure Event Hub namespace
 *  Open a bash shell and run ***setupAzureMonitor&#46;sh***.  For example:
    * ./setupAzureMonitor.sh
-*  Follow the directions to log in to Azure.  If you have logged in to Azure using Azure CLI before ("az login"), you have the option of using locally cached credentials.  
-*  You will be given the option of destroying any resource group that has the same name as the one you wish to use.  This is particularly useful if you plan to run the ***setupAzureMonitor&#46;sh*** script multiple times for testing and demo purposes.
+      *  Follow the directions to log in to Azure.  If you have logged in to Azure using Azure CLI before ("az login"), you have the option of using locally cached credentials.  
+      *  You will be given the option of destroying any resource group that has the same name as the one you wish to use.  Deleting the resource group will also destroy all resources within it.  This is particularly useful if you plan to run the ***setupAzureMonitor&#46;sh*** script multiple times for testing and demo purposes.
 *  The script will take 5 to 10 minutes to complete
-*  At the end, you will be given the option of identifying the folder where downloaded activity log files are stored.  
+   * You may see "Waiting for Event Hub Creation to complete" several times
+*  You'll be given the option of identifying the folder where downloaded activity log files are stored.  
    *  If you change your mind, alter the value of ***az_local_logs_dir*** in ***azureSettings&#46;json***.
-   *  If you don't provide value, we'll create a temporary folder each time you start the application and store logs there
+   *  If you don't provide a value, we'll create a temporary folder each time you start the application
 * A file named ***azureSettings&#46;json*** will be created containing all of the connection parameters needed by ***AzureMonitor4Siem*** to download Azure activity logs. 
 
 

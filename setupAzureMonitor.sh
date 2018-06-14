@@ -99,4 +99,4 @@ fi
 # Put Azure settings into a JSON file so our .NET app can use them
 printf '{\n "az_storage_account":"%s",\n "az_storage_account_container":"%s",\n "az_storage_account_sas":"%s", \n "az_event_hub_connection_string":"%s", \n "az_event_hub_name" : "%s", \n "az_local_logs_dir" : "%s" \n }\n' "$AZ_STORAGE_ACCOUNT" "$AZ_STORAGE_ACCOUNT_CONTAINER" "$AZ_STORAGE_ACCOUNT_SAS" "$AZ_EVENTHUB_CONNECTION_STRING" "insights-operational-logs" "$AZ_MONITOR_LOG_FILE_PATH" > azureSettings.json
 
-echo "Setup complete. You'll now need to build and run the application: dotnet clean;dotnet build;dotnet run"
+echo "Setup complete. You'll now need to build and run the application: dotnet restore;dotnet clean;dotnet build;dotnet run"
