@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # store year month date time as a variable
 # append it to resources to semi-ensure unique names where needed
@@ -21,15 +21,16 @@ AZ_EVENTHUB_CONNECTION_STRING=
 # Use this variable to store where log files get placed during runtime
 AZ_MONITOR_LOG_FILE_PATH=
 
-# Start!
+# Start
 
 echo ""
 echo "Welcome to the Azure Monitor starter kit!"
 echo ""
 
-read -p "Use cached credentials from a previous az login? " -n 1 -r
-echo   
-if [[ $REPLY =~ ^[Nn]$ ]]
+read -p "Use cached credentials from a previous az login? " LOGIN_AGAIN
+echo
+LOGIN_AGAIN=`echo $LOGIN_AGAIN | cut -c1-1`
+if [[ $LOGIN_AGAIN =~ ^[Nn]$ ]]
 then
     az login
 fi
@@ -38,9 +39,10 @@ fi
 AZ_SUBSCRIPTION_ID=`az account show --query id | sed 's/^"\(.*\)"$/\1/'`
 
 # Confirm deletion of any existing resource group or monitor configuration of the same name
-read -p "Delete any existing Azure Resouce Group ($AZ_RESOURCE_GROUP), Monitor Configuration, and azureSettings.json? " -n 1 -r
-echo   
-if [[ $REPLY =~ ^[Yy]$ ]]
+read -p "Delete any existing Azure Resouce Group ($AZ_RESOURCE_GROUP), Monitor Configuration, and azureSettings.json? " DELETE_RESOURCES
+echo
+DELETE_RESOURCES=`echo $DELETE_RESOURCES | cut -c1-1`
+if [[ $DELETE_RESOURCES =~ ^[Yy]$ ]]
 then
     az monitor log-profiles delete --name "default"
     az group delete -y -n $AZ_RESOURCE_GROUP
@@ -99,4 +101,4 @@ fi
 # Put Azure settings into a JSON file so our .NET app can use them
 printf '{\n "az_storage_account":"%s",\n "az_storage_account_container":"%s",\n "az_storage_account_sas":"%s", \n "az_event_hub_connection_string":"%s", \n "az_event_hub_name" : "%s", \n "az_local_logs_dir" : "%s" \n }\n' "$AZ_STORAGE_ACCOUNT" "$AZ_STORAGE_ACCOUNT_CONTAINER" "$AZ_STORAGE_ACCOUNT_SAS" "$AZ_EVENTHUB_CONNECTION_STRING" "insights-operational-logs" "$AZ_MONITOR_LOG_FILE_PATH" > azureSettings.json
 
-echo "Setup complete. You'll now need to build and run the application: dotnet restore;dotnet clean;dotnet build;dotnet run"
+echo "Setup complete. You'll now need to build and run the application: dotnet clean;dotnet build;dotnet run"
