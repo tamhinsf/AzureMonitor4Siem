@@ -205,7 +205,7 @@ If you're happy with the results, you can optionally publish AzureMonitor4Siem i
    * dotnet publish -c Release --self-contained -r your-RID -o /your/destination/folder
    * Here's an example for Ubuntu
       * dotnet publish -c Release --self-contained -r ubuntu-x64 -o /your/destination/folder
-   * The publish command will copy your configuration file ***azureSettings&#46;json*** to the destination folde as well.
+   * The publish command will copy your configuration file ***azureSettings&#46;json*** to the destination folder as well.
    * Now, you can run AzureMonitor4Siem simply like this:
       * /your/destination/folder/AzureMonitor4Siem
 
@@ -214,9 +214,6 @@ If you're happy with the results, you can optionally publish AzureMonitor4Siem i
 ***LifetimeEventsHostedService.cs*** contains the code that manages the lifecycle of the ***AzureMonitor4Siem***.  There are event handlers where you can add additional activities that occur upon startup (OnStarted), during shut down (OnStopping), and after shut down (OnStop). 
 
 ***SimpleEventProcessor.cs*** manages the processing of the activity logs placed into Azure Event Hub.  It is registered within ***LifetimeEventsHostedService*** inside OnStarted and un-registerered through OnStopping.  Within ***SimpleEventProcessor*** ***ProcessEventsAsync*** is responsible for iterating over the Azure activity logs placed by Azure Monitor into Event Hub and writing them to a local file.   As such, ***ProcessEventsAsync*** is a great place to author your own custom action.   
-
-## Manual Configuration of Azure Resources
-
 
 ## Acknowledgements
 
