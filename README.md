@@ -14,9 +14,11 @@ Our AzureMonitor4Siem project has two components: a script to setup the resource
 * Creates an Azure Resource Group that will contain all the Azure-based resources required to support the integration
 * Creates an Event Hub namespace 
 * Configures Azure Monitor to export and stream activity logs into a new Event Hub within the just-created Event Hub namespace 
-* Creates and configures an Azure Blob Storage account and Storage Container, which will be used to manage the synchronization state of the client application
-* Generates Shared Access Signatures for both the Event Hub and Blob Storage Container, eliminating the need to use master account keys in the client application
+* Creates and configures an Azure Blob Storage account, and within that Storage account a Storage Container, which will be used to manage the synchronization state of the client application
+* Generates Shared Access Signatures for both the Event Hub and Blob Storage account, eliminating the need to use master account keys in the client application
 * Generates a configuration file (***azureSettings&#46;json***) storing all connection parameters required by the client application.
+
+NOTE: If you don't want to use our setup script to create and configure the required Azure resources, no problem!  We'll describe manual the steps required and the settings you need to place into ***azureSettings&#46;json***
 
 ***AzureMonitor4Siem***, the client application, is built using [.NET Core](https://www.microsoft.com/net/) and can be run on Windows, macOS, and Linux.  It connects to the Event Hub created by Azure Monitor and downloads Azure activity logs to the local filesystem of the computer it's running on.  This application makes use of:
 
@@ -28,31 +30,40 @@ Let's get started!
 
 ## Setup a Development Environment
 *  Clone this GitHub repository
-*  You will need a Bash environment and Azure CLI 2.0 to run the ***setupAzureMonitor&#46;sh*** setup script
-   *  Mac and Linux environments inclue Bash
-      * [Download](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) and install Azure CLI 2.0.
-   *  Windows Server and Windows 10
-      * [Windows 10 Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) and [Windows Server Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-on-server), known as "WSL", provide a Bash environment that can run in a Windows 10 and Windows Server environment
-      * If you're using WSL, you'll need to install the Linux version of Azure CLI.
-      *  [Download](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) and install Azure CLI 2.0.
-   *  Alternatively, ***setupAzureMonitor&#46;sh*** does not have to run on the same computer as the client application.  You can run it elsewhere, as long as that environment has Bash and Azure CLI installed.
-      * [Azure Cloud Shell](https://shell.azure.com) provides you a browser-based Bash environment with Azure CLI pre-installed.   
-      * You can also [deploy](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal) a Linux Virtual machine in Azure
-
+*  Identify how you want to setup the Azure resources required to support Azure log streaming.
+   * Recommended: Use our  ***setupAzureMonitor&#46;sh*** script on a computer or environment that has Bash
+   * Alternative: Manually setup the Azure resources using the directions we provide
 *  [Download](https://www.microsoft.com/net/download/core) and install .NET Core 2.1 SDK, which is necessary to build and run the ***AzureMonitor4Siem*** application that downloads logs from Azure your computer
 
-
-### Identify a User Account and Azure Environment
+Identify a User Account and Azure Environment
 *  You'll need an Azure account that has the privledges to create and configure the Azure resources and services described above.  
 * If you don’t already have an Azure account, [register for a free trial](https://azure.microsoft.com/en-us/free/) that includes $200 in credits.
 
-## Review and Run setupAzureMonitor&#46;sh
+## Setup Azure Environment with ***setupAzureMonitor&#46;sh*** (recommended)
+
+Follow these steps if you want to use our ***setupAzureMonitor&#46;sh*** script to setup the Azure resources required to enable log streaming.  
+
+### Setup Bash Environment 
+
+You will need a Bash environment and Azure CLI 2.0 to run the ***setupAzureMonitor&#46;sh*** setup script
+
+   *  Mac and Linux environments inclue Bash
+      * [Download](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) and install Azure CLI 2.0.
+   *  Windows Server and Windows 10
+      * [Windows 10 Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) and [Windows Server Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-on-server), known as "WSL", provides a Bash environment that can run in a Windows 10 and Windows Server environment
+      * If you're using WSL, you'll need to install the Linux version of Azure CLI.
+      *  [Download](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) and install Azure CLI 2.0.
+   *  Alternatively, ***setupAzureMonitor&#46;sh*** does not have to run on the same computer as the client application.  You can run it elsewhere, as long as that environment has Bash and Azure CLI installed.  For instance:
+      * [Azure Cloud Shell](https://shell.azure.com) provides you a browser-based Bash environment with Azure CLI pre-installed.   
+      * You can also [deploy](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal) a Linux Virtual machine in Azure
+
+### Review and Run setupAzureMonitor&#46;sh
 
 *  Go to the folder containing your local clone of this repository
 *  In a text editor, open ***setupAzureMonitor&#46;sh***  
-*  There are a number of variables you may wish to alter.  There are some default values provided that you can probably use as-is - but let's be sure!  
+*  There are a number of variables you may wish to alter.  The values provided can probably be used as-is - but let's be sure!  
       * ***AZ_RESOURCE_GROUP*** is the name of the Azure Resource group that will contain the Azure resources created and used.  The name you use must be unique to your Azure subscription.
-      *  ***AZ_REGION*** is the name of the Azure region in which the Resource Group required for the integration will be created, and all of the supporting resources will be deployed.  By default, the script deploys to "westus2".  You can determine the list of region names through the Azure CLI by logging in and listing them as follows:
+      *  ***AZ_REGION*** is the name of the Azure region in which the Resource Group and all of the supporting resources will be deployed.  By default, the script deploys to "westus2".  You can a list of region names through the Azure CLI as follows:
          * az login
          * az account list-locations --query [*].name
    *  Two variables must be unique across all of Azure.  To help you, we automatically append the current date and time, using a variable called ***DATE_TIME*** to the following values
@@ -73,10 +84,60 @@ Let's get started!
 * A file named ***azureSettings&#46;json*** will be created containing all of the connection parameters needed by ***AzureMonitor4Siem*** to download Azure activity logs. 
    *  If you are running ***setupAzureMonitor&#46;sh*** in a different environment than where you will build and run AzureMonitor4Siem, you must copy  ***azureSettings&#46;json*** back to it.  Alternatvely, you can copy-and-paste the content into a file of the same name.
 
+## Setup Azure Environment manually (optional)
 
+
+If you've already followed the directions in the section called "Setup Azure Environment with ***setupAzureMonitor&#46;sh***" you can skip to the "Build and Run AzureMonitor4Siem" section.   
+
+The process below describes the steps required to manually configure the Azure resources needed to support Azure Monitor log streaming.  
+
+* Navigate to the folder containing your local clone of this repository
+   * Create a copy of the file name ***azureSettings&#46;sample&#46;json*** named ***azureSettings&#46;json*** 
+   * ***azureSettings&#46;json***  will contain the connection parameters required by the client application to connect to Azure
+
+We'll assume that you have a working familiarity with how to access the Azure portal and setup resources.   The steps below are meant to provide you high-level guidance. 
+
+* Login to the Azure portal
+* Create or identify the Resource Group you want to place the supporting Azure components into, and make use of it as you create them.  
+* Create an Event Hub namespace
+  * ***azureSettings&#46;json***  - Assign the Event Hub namespace name to the value ***az_event_hub_name***
+  * ***azureSettings&#46;json***  - Shared access policies -> RootManageSharedAccessKey -> Assign an Event Hub connection string to the value ***az_event_hub_connection_string***
+  * Note: When you setup Azure Monitor (next step), an Event Hub within the Event Hub namespace will automatically be created with the name "insights-operational-logs".  Do not create an Azure Event Hub at this time.  
+* Setup Azure Monitor
+  * Navigate to Azure Monitor -> Activity Log -> Export
+  * Export activity log
+     * Regions -> Select all
+     * Export to an event hub -> Select
+     * Service bus namespace 
+        * Select event hub namespace -> Pick the Event Hub namespace you just created
+        * Select event hub policy name -> Pick RootManageSharedAccessKey
+     * In the background, the process to create an Event Hub named "insights-operational-logs" will automatically be started.
+* Setup Azure Storage
+  * Create an Azure Storage account
+     * ***azureSettings&#46;json***  - Access Keys -> Assign the Storage Account name to the value ***az_storage_account***
+     * ***azureSettings&#46;json*** - Access Keys -> Assign the Storage Account connecting string to ***az_storage_account_connection_string***     
+  * Within the Azure Storage account, create a Blob Storage Container
+     * ***azureSettings&#46;json***  - Assign the Blob Storage Container name to the value ***az_storage_account_blob_container***
+* Identify Log File Location
+     * ***azureSettings&#46;json***  - Assign the file system path where downloaded logs should be stored to  az_local_logs_dir
+
+#### Manual Setup Advanced Security (Optional)
+
+Azure Event Hubs and Storage Accounts support the use of Shared Access Signatures (SAS).  These enable you to reduce the level and duration of access a client application has to these two resources.  You can create a SAS for the Event Hub and Storage Account connection used by ***AzureMonitor4Siem***.
+
+* Event Hub - You can create a SAS at the Event Hub (insights-operational-logs) or Event Hub namespace level.  The only permission required by ***AzureMonitor4Siem*** is Listen.  Apply the associated connection string to the value of ***az_event_hub_connection_string*** in ***azureSettings&#46;json***
+* Storage Account - Generate a SAS at the Storage Account level. Grant access to: 
+   * Blob service
+   * Service, Container, Object resource types
+   * Read, Write, Delete, List, Add, Create permissions
+   * Set a Start time prior to the current date and time (to be safe)
+   * Set an End expiry time sufficiently far into the future
+   * Allowed IP addresses, Allowed protocols, and Signing key can be set to your needs
+   * Click Generate SAS and connection string.  Copy the Connection string into the value of ***az_storage_account_connection_string*** in ***azureSettings&#46;json***
+ 
 ## Build and Run AzureMonitor4Siem
 *  Navigate to the folder containing your local clone of this repository
-*  Make sure that ***azureSettings&#46;json***, as created by ***setupAzureMonitor&#46;sh***  is present
+*  Make sure that ***azureSettings&#46;json***, as created by ***setupAzureMonitor&#46;sh*** is present.  If you manually setup the supporting Azure resources, make sure this file is present and contains the values listed the section "Setup Azure Environment manually". 
 *  Run these commands to build and run the client application that will download Activity logs to your computer:
     *  dotnet clean
     *  dotnet build
@@ -153,6 +214,8 @@ If you're happy with the results, you can optionally publish AzureMonitor4Siem i
 ***LifetimeEventsHostedService.cs*** contains the code that manages the lifecycle of the ***AzureMonitor4Siem***.  There are event handlers where you can add additional activities that occur upon startup (OnStarted), during shut down (OnStopping), and after shut down (OnStop). 
 
 ***SimpleEventProcessor.cs*** manages the processing of the activity logs placed into Azure Event Hub.  It is registered within ***LifetimeEventsHostedService*** inside OnStarted and un-registerered through OnStopping.  Within ***SimpleEventProcessor*** ***ProcessEventsAsync*** is responsible for iterating over the Azure activity logs placed by Azure Monitor into Event Hub and writing them to a local file.   As such, ***ProcessEventsAsync*** is a great place to author your own custom action.   
+
+## Manual Configuration of Azure Resources
 
 
 ## Acknowledgements

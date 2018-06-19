@@ -29,14 +29,13 @@ namespace AzureMonitor4Siem
                 _configuration["az_event_hub_name"],
                 PartitionReceiver.DefaultConsumerGroupName,
                 _configuration["az_event_hub_connection_string"],
-                string.Format("BlobEndpoint=https://{0}.blob.core.windows.net/;SharedAccessSignature={1}", _configuration["az_storage_account"], _configuration["az_storage_account_sas"]),
-                _configuration["az_storage_account_container"]);
+                _configuration["az_storage_account_connection_string"],
+                _configuration["az_storage_blob_container"]);
             
             if(string.IsNullOrEmpty(_configuration["az_local_logs_dir"]))
             {
                 localLogdirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
                 Directory.CreateDirectory(localLogdirectory);
-
             }
             else
             {
