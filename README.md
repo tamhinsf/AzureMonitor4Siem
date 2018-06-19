@@ -32,7 +32,7 @@ Let's get started!
 *  Clone this GitHub repository
 *  Identify how you want to setup the Azure resources required to support Azure log streaming.
    * Recommended: Use our  ***setupAzureMonitor&#46;sh*** script on a computer or environment that has Bash
-   * Alternative: Manually setup the Azure resources using the directions we provide
+   * Alternative: Manually setup the Azure resources using the directions we provide through the Azure Portal.  This is also a good option if you don't want to setup a Bash environment.
 *  [Download](https://www.microsoft.com/net/download/core) and install .NET Core 2.1 SDK, which is necessary to build and run the ***AzureMonitor4Siem*** application that downloads logs from Azure your computer
 
 Identify a User Account and Azure Environment
