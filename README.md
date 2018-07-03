@@ -2,7 +2,7 @@
 
 AzureMonitor4Siem makes it easy to setup [Azure Monitor](https://docs.microsoft.com/en-us/azure/monitoring-and-diagnostics/monitoring-overview-azure-monitor) and download the Azure activity logs it provides to a Windows, macOS, or Linux computer.  From there, you can quickly setup a log file-based integration with a SIEM, analytics tool, or monitoring solution of your choice.  
 
-Want to do more?  No problem!  Feel free to use our project and source code as a starter kit.   
+Want to do more?  Need to replace AzLog?  No problem!  Feel free to use our project and source code as a starter kit.   
 
 ## How It Works
 Azure Monitor enables you to [stream Azure activity logs](https://docs.microsoft.com/en-us/azure/monitoring-and-diagnostics/monitoring-stream-activity-logs-event-hubs) into an [Azure Event Hub](https://azure.microsoft.com/en-us/services/event-hubs/).  A client application can then connect to Event Hub and download the activity logs placed into it.  
