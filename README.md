@@ -28,18 +28,35 @@ NOTE: If you don't want to use our setup script to create and configure the requ
 
 Let's get started! 
 
-## Setup a Development Environment
-*  Clone this GitHub repository
-*  Identify how you want to setup the Azure resources required to support Azure log streaming.
-   * Recommended: Use our  ***setupAzureMonitor&#46;sh*** script on a computer or environment that has Bash
-   * Alternative: Manually setup the Azure resources using the directions we provide through the Azure Portal.  This is also a good option if you don't want to setup a Bash environment.
-*  [Download](https://www.microsoft.com/net/download/core) and install .NET Core 2.1 SDK, which is necessary to build and run the ***AzureMonitor4Siem*** application that downloads logs from Azure your computer
+## Identify your working environment
 
-Identify a User Account and Azure Environment
-*  You'll need an Azure account that has the privledges to create and configure the Azure resources and services described above.  
+Identify an Azure Environment and User Account
+* You'll need an Azure account that has privileges to create and configure the Azure resources and services we've described 
 * If you don’t already have an Azure account, [register for a free trial](https://azure.microsoft.com/en-us/free/) that includes $200 in credits.
 
-## Setup Azure Environment with ***setupAzureMonitor&#46;sh*** (recommended)
+Identify how you want to setup the Azure resources required to support Azure log streaming.
+   * Recommended: Use our  ***setupAzureMonitor&#46;sh*** script on a computer or environment that has Bash
+   * Alternative: Manually setup the Azure resources using the directions we provide through the Azure Portal.  This is also a good option if you don't want to setup a Bash environment.
+
+Identify where you want to want to build and run the ***AzureMonitor4Siem*** client application
+*  Your Own Environment:  This can be a VM you setup in Azure, your own computer, or any physical or virtual machine with connectivity to Azure and the Internet.  You'll need to:
+   *  Clone this GitHub repository.    
+      *  This will also include the ***setupAzureMonitor&#46;sh*** setup script. 
+   *  [Download](https://www.microsoft.com/net/download/core) and install .NET Core 2.1 SDK, which is necessary to build and run the ***AzureMonitor4Siem*** application that downloads logs from Azure your computer
+
+*  Easy Setup - Azure Virtual Machine: Don't want to setup our use your own compute?  We can also create an Ubuntu virtual machine in Azure that:
+   * Contains a clone of this GitHub Repository  
+      * This will also include the ***setupAzureMonitor&#46;sh*** setup script. 
+   * Downloads and installs .NET Core 2.1 SDK on your behalf
+   * Click the Deploy to Azure button below to get started
+      * Before you deploy, you'll need to Agree to the terms and click Purchase to begin deployment.  As a reminder, you're not actually paying to use this free template. However, the resources that you deploy and make use of will be billed to your subscription.
+
+         <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftamhinsf%2FAzureMonitor4Siem%2Fmaster%2Fazuredeploy.json" target="_blank"> <img alt="Deploy to Azure" src="http://azuredeploy.net/deploybutton.png"/>
+</a>&nbsp;&nbsp;<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Ftamhinsf%2FAzureMonitor4Siem%2Fmaster%2Fazuredeploy.json" target="_blank"> <img src="http://armviz.io/visualizebutton.png"/>
+</a>
+
+
+## Setup Azure resources with ***setupAzureMonitor&#46;sh*** (recommended)
 
 Follow these steps if you want to use our ***setupAzureMonitor&#46;sh*** script to setup the Azure resources required to enable log streaming.  
 
@@ -53,6 +70,8 @@ You will need a Bash environment and Azure CLI 2.0 to run the ***setupAzureMonit
       * [Windows 10 Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) and [Windows Server Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-on-server), known as "WSL", provides a Bash environment that can run in a Windows 10 and Windows Server environment
       * If you're using WSL, you'll need to install the Linux version of Azure CLI.
       *  [Download](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) and install Azure CLI 2.0.
+   *  Easy Setup - Azure Virtual Machine
+      * If you chose our Easy Setup option, the Ubuntu-based Azure Virtual machine we created for you has bash installed and setup as the default shell.
    *  Alternatively, ***setupAzureMonitor&#46;sh*** does not have to run on the same computer as the client application.  You can run it elsewhere, as long as that environment has Bash and Azure CLI installed.  For instance:
       * [Azure Cloud Shell](https://shell.azure.com) provides you a browser-based Bash environment with Azure CLI pre-installed.   
       * You can also [deploy](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal) a Linux Virtual machine in Azure
@@ -60,6 +79,7 @@ You will need a Bash environment and Azure CLI 2.0 to run the ***setupAzureMonit
 ### Review and Run setupAzureMonitor&#46;sh
 
 *  Go to the folder containing your local clone of this repository
+   * If you used our Easy Setup - Azure Virtual Machine option, the path to the local clone will be /azmo/AzureMonitor4Siem
 *  In a text editor, open ***setupAzureMonitor&#46;sh***  
 *  There are a number of variables you may wish to alter.  The values provided can probably be used as-is - but let's be sure!  
       * ***AZ_RESOURCE_GROUP*** is the name of the Azure Resource group that will contain the Azure resources created and used.  The name you use must be unique to your Azure subscription.
@@ -84,7 +104,7 @@ You will need a Bash environment and Azure CLI 2.0 to run the ***setupAzureMonit
 * A file named ***azureSettings&#46;json*** will be created containing all of the connection parameters needed by ***AzureMonitor4Siem*** to download Azure activity logs. 
    *  If you are running ***setupAzureMonitor&#46;sh*** in a different environment than where you will build and run AzureMonitor4Siem, you must copy  ***azureSettings&#46;json*** back to it.  Alternatvely, you can copy-and-paste the content into a file of the same name.
 
-## Setup Azure Environment manually (optional)
+## Setup Azure resources manually (optional)
 
 
 If you've already followed the directions in the section called "Setup Azure Environment with ***setupAzureMonitor&#46;sh***" you can skip to the "Build and Run AzureMonitor4Siem" section.   
@@ -94,6 +114,7 @@ The process below describes the steps required to manually configure the Azure r
 * Navigate to the folder containing your local clone of this repository
    * Create a copy of the file name ***azureSettings&#46;sample&#46;json*** named ***azureSettings&#46;json*** 
    * ***azureSettings&#46;json***  will contain the connection parameters required by the client application to connect to Azure
+   * If you used our Easy Setup - Azure Virtual Machine option, the path to the local clone will be /azmo/AzureMonitor4Siem
 
 We'll assume that you have a working familiarity with how to access the Azure portal and setup resources.   The steps below are meant to provide you high-level guidance. 
 
@@ -137,6 +158,7 @@ Azure Event Hubs and Storage Accounts support the use of Shared Access Signature
  
 ## Build and Run AzureMonitor4Siem
 *  Navigate to the folder containing your local clone of this repository
+   * If you used our Easy Setup - Azure Virtual Machine option, the path to the local clone will be /azmo/AzureMonitor4Siem
 *  Make sure that ***azureSettings&#46;json***, as created by ***setupAzureMonitor&#46;sh*** is present.  If you manually setup the supporting Azure resources, make sure this file is present and contains the values listed the section "Setup Azure Environment manually". 
 *  Run these commands to build and run the client application that will download Activity logs to your computer:
     *  dotnet clean
@@ -195,6 +217,7 @@ info: AzureMonitor4Siem.LifetimeEventsHostedService[0]
 
 If you're happy with the results, you can optionally publish AzureMonitor4Siem into a self-contained application.  This will enable you to run AzureMonitor4Siem from another folder or  another computer of the same operating system.
 *  Navigate to the folder containing your local clone of this repository
+   * If you used our Easy Setup - Azure Virtual Machine option, the path to the local clone will be /azmo/AzureMonitor4Siem
 *  Determine the directory you want to publish and install AzureMonitor4Siem into.
 *  Find the "Runtime Identifier" (RID) that corresponds to your operating system environment on the following website https://docs.microsoft.com/en-us/dotnet/core/rid-catalog
    * Here are the RIDs for some popular operating systems
