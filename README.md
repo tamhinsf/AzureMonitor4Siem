@@ -62,14 +62,14 @@ Identify where you want to want to build and run the ***AzureMonitor4Siem*** cli
 </a>&nbsp;&nbsp;<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Ftamhinsf%2FAzureMonitor4Siem%2Fmaster%2Fazuredeploy.json" target="_blank"> <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
-      * Once you've begun your deployment, you can remain in the Azure Portal or navigate away and come back. Either way, you'll receive a notification in the Azure Portal upon completion. Once this has occured:
+   * Once you've begun your deployment, you can remain in the Azure Portal or navigate away and come back. Either way, you'll receive a notification in the Azure Portal upon completion. Once this has occured:
 
-         * Navigate to the Azure Resource Group you targeted
-         * Look for a virtual machine called "azmo4siem". 
-         *  On the "Overview" Pane click the Connect button. You'll be shown the username@hostname value you can supply to your SSH client.
-         * Connect using your SSH credentials
-         * After you login, look for a file called "done" in your home directory. This is an indication that the scripts used for configuration and deployment have completed. 
-         * Review the file called /tmp/azuredeploy.log.xxxx where xxxx is a random four digit number. Check for errors. The operations performed by our scripts may have failed due to unexpected network timeouts or other reasons.
+     * Navigate to the Azure Resource Group you targeted
+     * Look for a virtual machine called "azmo4siem". 
+     *  On the "Overview" Pane click the Connect button. You'll be shown the username@hostname value you can supply to your SSH client.
+     * Connect using your SSH credentials
+     * After you login, look for a file called "done" in your home directory. This is an indication that the scripts used for configuration and deployment have completed. 
+     * Review the file called /tmp/azuredeploy.log.xxxx where xxxx is a random four digit number. Check for errors. The operations performed by our scripts may have failed due to unexpected network timeouts or other reasons.
 
 
 ## Setup Azure resources with ***setupAzureMonitor&#46;sh*** (recommended)
