@@ -39,41 +39,42 @@ Identify how you want to setup the Azure resources required to support Azure log
    * Alternative: Manually setup the Azure resources using the directions we provide through the Azure Portal.  This is also a good option if you don't want to setup a Bash environment.
 
 Identify where you want to want to build and run the ***AzureMonitor4Siem*** client application
-*  Your Own Environment:  This can be a VM you setup in Azure, your own computer, or any physical or virtual machine with connectivity to Azure and the Internet.  You'll need to:
+*  Your Own Environment
+   
+   This can be a VM you setup in Azure, your own computer, or any physical or virtual machine with connectivity to Azure and the Internet.  You'll need to:
    *  Clone this GitHub repository.    
       *  This will also include the ***setupAzureMonitor&#46;sh*** setup script. 
    *  [Download](https://www.microsoft.com/net/download/core) and install .NET Core 2.1 SDK, which is necessary to build and run the ***AzureMonitor4Siem*** application that downloads logs from Azure your computer
 
-*  Easy Setup - Azure Virtual Machine: Don't want to setup our use your own compute?  We can also create an Ubuntu virtual machine in Azure that:
-   * Contains a clone of this GitHub Repository  
-      * This will also include the ***setupAzureMonitor&#46;sh*** setup script. 
-   * Downloads and installs .NET Core 2.1 SDK on your behalf
-   
-   * Click the Deploy to Azure button below to get started
-      * We've pre-selected a low-cost VM series (Standard_A1) available in all Azure regions.
-      * If you change it, make sure the VM Series you enter is available in the Azure region you target. Need help? The Azure VM Comparision website will show you the VMs available in a given region https://azureprice.net/
-      * Azure supports data disks of up to 4TB (4095 GB). We've defaulted you to 512 GB.
-      * DNS Label Prefix is the public-facing hostname of the machine.  It must be unique to the Azure region you are deploying to.  
-         * If you deploy to West US 2, for example, the fully-qualified hostname will be: your-hostname.westus2.cloudapp.azure.com
-         * Creatively challenged?  Just leave it blank.  We'll generate a unique one for you.  You can change it later.
-         * Picking one yourself?
-            * Unfortunately, we're unable to determine if the value you enter is already being used at this time.  
-            * We suggest you append the month, day, year to achieve uniqueness.  For example: your-hostname-01012018
-            * After the machine has been created, you can go back and change it through the Azure Portal
-      * Before you deploy, you'll need to Agree to the terms and click Purchase to begin deployment.  As a reminder, you're not actually paying to use this free template. However, the resources that you deploy and make use of will be billed to your subscription.
+*  Easy Setup - Azure Virtual Machine: 
 
-         <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftamhinsf%2FAzureMonitor4Siem%2Fmaster%2Fazuredeploy.json" target="_blank"> <img alt="Deploy to Azure" src="http://azuredeploy.net/deploybutton.png"/>
+   Don't want to setup our use your own compute?  We can also create an Ubuntu virtual machine in Azure that automatically performs the steps described in Your Own Environment.   Click the Deploy to Azure button further down to get started
+   * We've pre-selected a low-cost VM series (Standard_A1) available in all Azure regions. 
+      * If you change it, make sure the VM Series you enter is available in the Azure region you target. 
+      * Need help? The Azure VM Comparision website will show you the VMs available in a given region https://azureprice.net/
+   * Azure supports data disks of up to 4TB (4095 GB). We've defaulted you to 512 GB.
+   * DNS Label Prefix is the public-facing hostname of the machine.  It must be unique to the Azure region you are deploying to.
+      * If you deploy to West US 2, for example, the fully-qualified hostname will be: your-hostname.westus2.cloudapp.azure.com
+      * Creatively challenged?  
+         * Just leave it blank.  We'll generate a unique one for you.  You can change it later.
+      * Picking one yourself?
+         * Unfortunately, we're unable to determine if the value you enter is already being used at this time.  
+         * We suggest you append the month, day, year to achieve uniqueness.  For example: your-hostname-01012018
+         * After the machine has been created, you can go back and change it through the Azure Portal
+   * Before you deploy, you'll need to Agree to the terms and click Purchase to begin deployment.  As a reminder, you're not actually paying to use this free template. However, the resources that you deploy and make use of will be billed to your subscription.
+
+     <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftamhinsf%2FAzureMonitor4Siem%2Fmaster%2Fazuredeploy.json" target="_blank"> <img alt="Deploy to Azure" src="http://azuredeploy.net/deploybutton.png"/>
 </a>&nbsp;&nbsp;<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Ftamhinsf%2FAzureMonitor4Siem%2Fmaster%2Fazuredeploy.json" target="_blank"> <img src="http://armviz.io/visualizebutton.png"/></a>
 
-     * Once you've begun your deployment, you can remain in the Azure Portal or navigate away and come back. Either way, you'll receive a notification in the Azure Portal upon completion. Once this has occured:
-        * Navigate to the Azure Resource Group you targeted
-        * Look for a virtual machine called "azmo4siem".   Click it.
-        * On the "Overview" Pane for "azmo4siem", you can click:
-           * DNS Name if you don't like the unique value we generated for the public-facing hostname
-           * Connect to see the username@hostname value you can supply to your SSH client.
-        * Connect using your SSH credentials
-     * After you login, look for a file called "done" in your home directory. This is an indication that the scripts used for configuration and deployment have completed. 
-     * Review the file called /tmp/azuredeploy.log.xxxx where xxxx is a random four digit number. Check for errors. The operations performed by our scripts may have failed due to unexpected network timeouts or other reasons.
+   * Once you've begun your deployment, you can remain in the Azure Portal or navigate away and come back. Either way, you'll receive a notification in the Azure Portal upon completion. Once this has occured:
+      * Navigate to the Azure Resource Group you targeted
+      * Look for a virtual machine called "azmo4siem".   Click it.
+      * On the "Overview" Pane for "azmo4siem", you can:
+         * Click DNS Name if you don't like the unique value we generated for the public-facing hostname
+         * Click the Connect icon to see the username@hostname value you can supply to your SSH client.
+      * Connect using your SSH credentials and preferred SSH client
+   * After you login, look for a file called "done" in your home directory. This is an indication that the scripts used for configuration and deployment have completed.
+   * Review the file called /tmp/azuredeploy.log.xxxx where xxxx is a random four digit number. Check for errors. The operations performed by our scripts may have failed due to unexpected network timeouts or other reasons.
 
 
 ## Setup Azure resources with ***setupAzureMonitor&#46;sh*** (recommended)
