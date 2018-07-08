@@ -48,6 +48,7 @@ Identify where you want to want to build and run the ***AzureMonitor4Siem*** cli
    * Contains a clone of this GitHub Repository  
       * This will also include the ***setupAzureMonitor&#46;sh*** setup script. 
    * Downloads and installs .NET Core 2.1 SDK on your behalf
+   
    * Click the Deploy to Azure button below to get started
       * We've pre-selected a low-cost VM series (Standard_A1) available in all Azure regions.
       * If you change it, make sure the VM Series you enter is available in the Azure region you target. Need help? The Azure VM Comparision website will show you the VMs available in a given region https://azureprice.net/
