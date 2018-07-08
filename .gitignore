@@ -1,4 +1,4 @@
-azureSettings.json
+azureMonitor4SiemSettings.json
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

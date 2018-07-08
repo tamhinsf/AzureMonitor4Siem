@@ -42,14 +42,14 @@ fi
 AZ_SUBSCRIPTION_ID=`az account show --query id | sed 's/^"\(.*\)"$/\1/'`
 
 # Confirm deletion of any existing resource group or monitor configuration of the same name
-read -p "Delete any existing Azure Resouce Group ($AZ_RESOURCE_GROUP), Monitor Configuration, and azureSettings.json? " DELETE_RESOURCES
+read -p "Delete any existing Azure Resouce Group ($AZ_RESOURCE_GROUP), Monitor Configuration, and azureMonitor4SiemSettings.json? " DELETE_RESOURCES
 echo
 DELETE_RESOURCES=`echo $DELETE_RESOURCES | cut -c1-1`
 if [[ $DELETE_RESOURCES =~ ^[Yy]$ ]]
 then
     az monitor log-profiles delete --name "default"
     az group delete -y -n $AZ_RESOURCE_GROUP
-    rm azureSettings.json
+    rm azureMonitor4SiemSettings.json
 fi
 
 # Setup the Resource Group in the specified region
@@ -111,6 +111,6 @@ fi
 printf '{\n "az_storage_account":"%s",\n "az_storage_blob_container":"%s",\n "az_storage_account_connection_string":"%s",\n "az_event_hub_name" : "%s",\n "az_event_hub_connection_string":"%s",\n "az_local_logs_dir" : "%s" \n }\n' \
      "$AZ_STORAGE_ACCOUNT" "$AZ_STORAGE_ACCOUNT_BLOB_CONTAINER" \
      "$AZ_STORAGE_ACCOUNT_CONNECTION_STRING" \
-     "insights-operational-logs" "$AZ_EVENTHUB_CONNECTION_STRING" "$AZ_MONITOR_LOG_FILE_PATH" > azureSettings.json
+     "insights-operational-logs" "$AZ_EVENTHUB_CONNECTION_STRING" "$AZ_MONITOR_LOG_FILE_PATH" > azureMonitor4SiemSettings.json
  
 echo "Setup complete. You'll now need to build and run the application: dotnet clean;dotnet build;dotnet run"

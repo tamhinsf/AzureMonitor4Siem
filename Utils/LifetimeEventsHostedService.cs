@@ -7,7 +7,7 @@ using Microsoft.Azure.EventHubs;
 using Microsoft.Azure.EventHubs.Processor;
 using System.IO;
 
-namespace AzureMonitor4Siem
+namespace AzureMonitor4Siem.Utils
 {
     public class LifetimeEventsHostedService : IHostedService
     {

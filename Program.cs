@@ -15,25 +15,25 @@ namespace AzureMonitor4Siem
                 .ConfigureHostConfiguration(configHost =>
                 {
                     configHost.SetBasePath(Directory.GetCurrentDirectory());
-                    configHost.AddJsonFile("hostsettings.json", optional: true);
+                    // configHost.AddJsonFile("hostsettings.json", optional: true);
                     configHost.AddEnvironmentVariables(prefix: "ASPNETCORE_");
                     configHost.AddCommandLine(args);
                 })
                 .ConfigureAppConfiguration((hostContext, configApp) =>
                 {
                     System.Console.WriteLine(hostContext.HostingEnvironment.EnvironmentName);
-                    configApp.AddJsonFile("azureSettings.json", optional: false);
-                    configApp.AddJsonFile("appsettings.json", optional: true);
-                    configApp.AddJsonFile(
-                        $"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", 
-                        optional: true);
+                    configApp.AddJsonFile("azureMonitor4SiemSettings.json", optional: false);
+                    // configApp.AddJsonFile("appsettings.json", optional: true);
+                    // configApp.AddJsonFile(
+                    //     $"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", 
+                    //     optional: true);
                     configApp.AddEnvironmentVariables(prefix: "ASPNETCORE_");
                     configApp.AddCommandLine(args);
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddLogging();
-                    services.AddHostedService<LifetimeEventsHostedService>();
+                    services.AddHostedService<Utils.LifetimeEventsHostedService>();
                 })
                 .ConfigureLogging((hostContext, configLogging) =>
                 {

@@ -11,7 +11,7 @@ using Microsoft.Azure.EventHubs.Processor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace AzureMonitor4Siem
+namespace AzureMonitor4Siem.Utils
 {
     public class SimpleEventProcessor : IEventProcessor
     {
