@@ -16,8 +16,9 @@
       },
       "dnsLabelPrefix": {
         "type": "string",
+        "defaultValue": "",
         "metadata": {
-          "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
+          "description": "Optional: Unique DNS Name for the Public IP used to access the Virtual Machine."
         }
       },
     "vmSize": {
@@ -75,7 +76,7 @@
         "properties": {
           "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
           "dnsSettings": {
-            "domainNameLabel": "[parameters('dnsLabelPrefix')]"
+            "domainNameLabel": "[if(equals(parameters('dnsLabelPrefix'), ''), concat(variables('vmName'),'-',uniqueString(resourceGroup().id)), parameters('dnsLabelPrefix'))]"
           }
         }
       },
